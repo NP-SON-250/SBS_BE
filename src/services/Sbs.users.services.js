@@ -22,7 +22,10 @@ export const loginUser = async (userData) => {
       if (!user) {
         throw new Error("User not found");
       }
-  
+      if(userData.userPassword){
+        const saltRounds = 10;
+        userData.userPassword = await bcrypt.hash(userData.userPassword,saltRounds);
+      }
       const updatedUser = await Users.findByIdAndUpdate(id, userData, { new: true });
       return updatedUser;
     } catch (error) {

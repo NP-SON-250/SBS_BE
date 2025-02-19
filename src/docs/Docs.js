@@ -12,9 +12,18 @@ const options = {
     description: "Documentation for Alema Soft SBS API.",
   },
   basePath: "/",
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT", // Optional, specifies JWT as the token format
+      },
+    },
+  },
   security: [
     {
-      bearerAuth: [],
+      bearerAuth: [], // Apply bearer authentication globally
     },
   ],
   tags: [
@@ -870,19 +879,9 @@ const options = {
       },
     //Others
   },
-  components: {
-    securitySchemes: {
-      bearerAuth: {
-        type: "http",
-        scheme: "bearer",
-        bearerFormat: "JWT",
-        in: "header",
-        name: "Authorization",
-      },
-    },
-  },
+},
 }
-};
+
 
 
 docrouter.use("/", serve, setup(options));
