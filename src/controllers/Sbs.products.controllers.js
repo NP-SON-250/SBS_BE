@@ -95,7 +95,7 @@ export const updateProduct = async (req, res) => {
 // constroller to retrieve all products
 export const getProducts = async (req, res) => {
   try {
-    const products = await prodService.getSt();
+    const products = await prodService.getProd();
     return res.status(200).json({
       status: "200",
       message: "Products retrieved",

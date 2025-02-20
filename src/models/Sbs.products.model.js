@@ -28,11 +28,9 @@ const productsSchema = new mongoose.Schema(
     },
     expDate: {
         type: String,
-        required: true, 
     },
     status: {
-        type: String,
-        required: true, 
+      type: String, enum: ["approved", "not approved"], default: "not approved"  
     },
     prodFor: {
         type: mongoose.Schema.ObjectId,

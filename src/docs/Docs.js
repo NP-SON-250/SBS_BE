@@ -17,13 +17,13 @@ const options = {
       bearerAuth: {
         type: "http",
         scheme: "bearer",
-        bearerFormat: "JWT", // Optional, specifies JWT as the token format
+        bearerFormat: "JWT", 
       },
     },
   },
   security: [
     {
-      bearerAuth: [], // Apply bearer authentication globally
+      bearerAuth: [],
     },
   ],
   tags: [
@@ -38,6 +38,10 @@ const options = {
     {
       name: "Stocks",
       description: "Operations related to Stocks entities",
+    },
+    {
+      name: "Products",
+      description: "Operations related to Products entities",
     },
     {
       name: "Users",
@@ -524,6 +528,199 @@ const options = {
           },
           404: {
             description: "Stock not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+
+    //Products
+    "/api/v1/products": {
+      get: {
+        tags: ["Products"],
+        summary: "All products",
+        description: "Get all products",
+        responses: {
+          200: {
+            description: "All products are retrieved",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+      post: {
+        tags: ["Products"],
+        summary: "Create product",
+        description: "Create new product",
+        requestBody: {
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  prodName: {
+                    type: "string",
+                  },
+                  image: {
+                    type: "string",
+                    format:"binary",
+                  },
+                  prodQuantity: {
+                    type: "string",
+                  },
+                  unitMeasure: {
+                    type: "string",
+                  },
+                  buyPrice: {
+                    type: "string",
+                  },
+                  salePrice: {
+                    type: "string",
+                  },
+                  expDate: {
+                    type: "string",
+                    format: "date",
+                  },
+                  prodFor: {
+                    type: "string",
+                  },
+                },
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "New product added",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/products/{id}": {
+      get: {
+        tags: ["Products"],
+        summary: "Read product By ID",
+        description: "Get a product by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Product retrieved",
+          },
+          404: {
+            description: "Product not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+      put: {
+        tags: ["Products"],
+        summary: "Update products",
+        description: "Update an existing product informations",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  prodName: {
+                    type: "string",
+                  },
+                  image: {
+                    type: "string",
+                    format:"binary",
+                  },
+                  prodQuantity: {
+                    type: "string",
+                  },
+                  unitMeasure: {
+                    type: "string",
+                  },
+                  buyPrice: {
+                    type: "string",
+                  },
+                  salePrice: {
+                    type: "string",
+                  },
+                  expDate: {
+                    type: "string",
+                    format: "date",
+                  },
+                  
+                },
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          200: {
+            description: "Product updated",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          404: {
+            description: "Product not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+      delete: {
+        tags: ["Products"],
+        summary: "Delete product",
+        description: "Delete a product",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Product deleted",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          404: {
+            description: "Product not found",
           },
           500: {
             description: "Internal Server Error",

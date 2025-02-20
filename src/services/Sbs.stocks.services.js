@@ -1,21 +1,28 @@
 import Stocks from "../models/Sbs.stock.model";
 import Businesses from "../models/Sbs.businesses.model";
 
-// service to create a stock
+// Service to create a stock
 export const createSt = async (stData) => {
   const { stName, descriptions, stockFor } = stData;
-  const isBusinessExist = await Businesses.findOne({ bsName: stockFor })
-    if(!isBusinessExist){
-      return res.status(404).json({
-        status:"404",
-        message:"Business not found",
-      });
-    }
 
+  // Check if business exists
+  const isBusinessExist = await Businesses.findOne({ bsName: stockFor });
+  if (!isBusinessExist) {
+    throw new Error("Business not found");
+  }
+
+  // Check if stock already exists for the same business
+  const stockExist = await Stocks.findOne({ stName, stockFor: isBusinessExist._id });
+
+  if (stockExist) {
+    throw new Error("Stock already exists for this business");
+  }
+
+  // Create new stock
   return await Stocks.create({
     stName,
     descriptions,
-    stockFor:isBusinessExist._id,
+    stockFor: isBusinessExist._id,
   });
 };
 

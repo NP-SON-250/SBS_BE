@@ -17,15 +17,7 @@ export const createStock = async (req, res) => {
   try {
     // checking if stock already exits
     const { stName, stockFor } = req.body;
-    const stockExist = await Stocks.findOne({ stName: stName });
-
-    if (stockExist) {
-      console.log(stockExist);
-      return res.status(403).json({
-        status: "403",
-        message: "Stock already exists",
-      });
-    }
+    
     const isBusinessExist = await Businesses.findOne({ bsName: stockFor })
     if(!isBusinessExist){
       return res.status(404).json({
